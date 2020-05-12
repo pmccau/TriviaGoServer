@@ -5,13 +5,22 @@ import (
 	"net/http"
 	"log"
 	"fmt"
+	"os"
 )
 
 
 func main() {
 	r := router.Router()
 	fmt.Println("Starting server on port 8080...")
-	err := http.ListenAndServe(":8080", r)
+
+	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	if port == ":" {
+		port = ":8080"
+	}
+
+	fmt.Println("PORT:", port)
+
+	err := http.ListenAndServe(port, r)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
