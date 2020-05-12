@@ -1,0 +1,8 @@
+{
+  "name": "Trivia Go Server",
+  "description": "Simple Go web server",
+  "repository": "https://github.com/pmccau/TriviaGoServer",
+  "logo": "https://golang.org/lib/godoc/images/go-logo-blue.svg",
+  "success_url": "/success",
+  "keywords": ["go", "trivia"]
+}
