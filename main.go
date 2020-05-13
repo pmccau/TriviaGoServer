@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/pmccau/TriviaGoServer/router"
-	"net/http"
-	"log"
 	"fmt"
+	"github.com/pmccau/TriviaGoServer/router"
+	"log"
+	"net/http"
 	"os"
 )
 

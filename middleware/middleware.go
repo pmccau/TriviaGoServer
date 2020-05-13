@@ -46,7 +46,34 @@ func Test(w http.ResponseWriter, r *http.Request) {
 	var res interface{}
 	_ = json.NewDecoder(r.Body).Decode(&res)
 	fmt.Println(res)
+	fmt.Println(reflect.TypeOf(res))
+	parseQuestionRequest(res)
 	json.NewEncoder(w).Encode(message)
+}
+
+type questionSet struct {
+	Category		string
+	CategoryID		int
+	Difficulty		string
+	AnsType			string
+	NumQuestions	int
+	Questions		[]*Question
+}
+
+func parseQuestionRequest(request interface{}) *questionSet {
+	// Handle the []interface{} returned by response results
+	switch result := request.(type) {
+	case map[string]interface {}:
+		qs := new(questionSet)
+		qs.Category = interfaceToString(result["category"])
+		qs.Difficulty = interfaceToString(result["category"])
+		qs.AnsType = interfaceToString(result["category"])
+		//qs.Questions = GetQuestions()
+		qs.NumQuestions = len(qs.Questions)
+		qs.CategoryID = interfaceToInt(result["category"])
+		return qs
+	}
+	return nil
 }
 
 func GetCategories(w http.ResponseWriter, r *http.Request) {
