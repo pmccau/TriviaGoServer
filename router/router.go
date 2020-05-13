@@ -3,8 +3,8 @@ package router
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pmccau/TriviaGoServer/middleware"
 	"github.com/gorilla/mux"
+	"github.com/pmccau/TriviaGoServer/middleware"
 	"net/http"
 )
 

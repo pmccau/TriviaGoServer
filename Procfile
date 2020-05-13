@@ -1,1 +1,1 @@
-web: trivia-go-server
+web: TriviaGoServer
