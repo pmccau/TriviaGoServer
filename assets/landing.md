@@ -1,10 +1,9 @@
 # triviaGo api documentation
 
-### introduction
-##### the triviaGo api
+## introduction
+#### the triviaGo api
 *TODO:overview*
 
-##### What API commands are used by this API?
 
 |command|purpose|
 |---|---|
@@ -13,13 +12,12 @@
 |post|fetch one or more objects from a given endpoint with specific attributes|
 |delete|not yet in service|
  
-`root url`: https://triviagoserver.herokuapp.com/api
+**root url:** https://triviagoserver.herokuapp.com/api
 ***
 
-### endpoints
+## endpoints
 
----
-#### questions
+### questions
 * **url**: https://triviagoserver.herokuapp.com/api/questions 
 * **overview**: this endpoint is used to retrieve Question objects
 * **request type**: post
@@ -75,7 +73,7 @@ axios.post("https://triviagoserver.herokuapp.com/api/question",
 ```
 ---
 
-#### categories
+### categories
 * **url**: https://triviagoserver.herokuapp.com/api/categories 
 * **overview**: this endpoint is used to retrieve Category objects
 * **request type**: get
