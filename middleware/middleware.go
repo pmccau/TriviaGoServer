@@ -3,6 +3,7 @@ package middleware
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/pmccau/TriviaGoServer/data"
 	"log"
 	"net/http"
 	"reflect"
@@ -22,6 +23,15 @@ func Test(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(reflect.TypeOf(res))
 	parseQuestionRequest(res)
 	json.NewEncoder(w).Encode(message)
+}
+
+
+func CreateLobby(w http.ResponseWriter, r *http.Request) {
+	data.NewLobby(5)
+}
+
+func GetLobby(w http.ResponseWriter, r *http.Request) {
+
 }
 
 // GetCategories will route the response for trivia categories, returning a list of
