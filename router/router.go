@@ -1,23 +1,25 @@
 package router
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/russross/blackfriday"
 	"github.com/pmccau/TriviaGoServer/middleware"
+	"io/ioutil"
 	"net/http"
 )
 
 func Router() *mux.Router {
 	router := mux.NewRouter()
-	
-	x := `{"test": "this is a test"}`
+
+	//// Read in the help page for the landing
+	md, err := ioutil.ReadFile("assets/landing.md")
+	if err != nil {
+		panic(err)
+	}
+	html := blackfriday.MarkdownCommon(md)
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		resp, err := json.MarshalIndent(x, "", "  ")
-		if err != nil {
-			panic(err)
-		}
-		fmt.Fprint(w, string(resp))
+		fmt.Fprint(w, string(html))
 	})
 
 	router.HandleFunc("/api/test", middleware.Test)
