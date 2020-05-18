@@ -1,6 +1,5 @@
 package data
 
-import "github.com/pmccau/TriviaGoServer/middleware"
 
 type Category struct {
 	Name 	string
@@ -52,12 +51,13 @@ type Lobby struct {
 	Teams 			[]*Team
 	Questions 		[]*QuestionSet
 	Categories		[]*Category
+	Passcode		string
 }
 
 func NewLobby(numRounds int) *Lobby {
 	l := new(Lobby)
 	l.Rounds = numRounds
-	l.LobbyID = middleware.GenerateGuid()
+	l.LobbyID = GenerateGuid()
 	// Load the Questions w/ default properties
 	for i := 0; i < l.Rounds; i++ {
 		l.Questions[i] = NewQuestionSet(0, "Any", 10, "Any")
@@ -74,7 +74,7 @@ type Team struct {
 func NewTeam(Name string) {
 	t := new(Team)
 	t.Name = Name
-	t.TeamID = middleware.GenerateGuid()
+	t.TeamID = GenerateGuid()
 }
 
 //// Round has a round number and a QuestionSet

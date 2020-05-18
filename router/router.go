@@ -21,7 +21,8 @@ func Router() *mux.Router {
 	})
 
 	router.HandleFunc("/api/test", middleware.Test)
-	router.HandleFunc("/api/getQuestions", middleware.GetQuestions)
-	router.HandleFunc("/api/getCategories", middleware.GetCategories)
+	router.HandleFunc("/api/questions", middleware.GetQuestions)
+	router.HandleFunc("/api/categories", middleware.GetCategories)
+	router.HandleFunc("/api/help", middleware.HelpRequest)
 	return router
 }

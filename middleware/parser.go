@@ -64,11 +64,11 @@ func buildQuestionRequestURL(qs *data.QuestionSet) string {
 		category = ""
 	}
 	difficulty := fmt.Sprintf("&difficulty=%v", qs.Difficulty)
-	if qs.Difficulty == "" {
+	if qs.Difficulty != "easy" && qs.Difficulty != "medium" && qs.Difficulty != "hard" {
 		difficulty = ""
 	}
 	questionType := fmt.Sprintf("&type=%v", qs.QuestionType)
-	if qs.QuestionType == "" {
+	if qs.QuestionType != "multiple" && qs.QuestionType != "boolean" {
 		questionType = ""
 	}
 	return fmt.Sprintf("%s%s%s%s%s", root, amount, category, difficulty, questionType)
@@ -83,11 +83,12 @@ func parseQuestionRequest(request interface{}) *data.QuestionSet {
 		qs := new(data.QuestionSet)
 		qs.Category = interfaceToString(result["category"])
 		qs.Difficulty = interfaceToString(result["difficulty"])
-		qs.QuestionType = interfaceToString(result["questionType"])
-		qs.NumQuestions = interfaceToInt(result["numQuestions"])
+		qs.QuestionType = interfaceToString(result["question_type"])
+		qs.NumQuestions = interfaceToInt(result["question_quantity"])
 		qs.RequestURL = buildQuestionRequestURL(qs)
-		fmt.Print(qs)
+		fmt.Print("QS = ", qs)
 		return qs
 	}
 	return nil
 }
+
