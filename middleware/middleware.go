@@ -127,10 +127,3 @@ func HelpRequest(w http.ResponseWriter, r *http.Request) {
 	SetResponseHeaders(w)
 	fmt.Fprint(w, indentJSON(getHelpResponse()))
 }
-
-func SetResponseHeaders(w http.ResponseWriter) {
-	w.Header().Set("Context-Type", "application/results-www-form-urlencoded")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-}

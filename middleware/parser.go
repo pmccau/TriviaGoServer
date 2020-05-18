@@ -56,24 +56,6 @@ func parseQuestions(results interface{}) []*data.Question {
 	return questions
 }
 
-func buildQuestionRequestURL(qs *data.QuestionSet) string {
-	root := "https://opentdb.com/api.php?"
-	amount := fmt.Sprintf("amount=%d", qs.NumQuestions)
-	category := fmt.Sprintf("&category=%v", qs.CategoryID)
-	if qs.CategoryID < 0 {
-		category = ""
-	}
-	difficulty := fmt.Sprintf("&difficulty=%v", qs.Difficulty)
-	if qs.Difficulty != "easy" && qs.Difficulty != "medium" && qs.Difficulty != "hard" {
-		difficulty = ""
-	}
-	questionType := fmt.Sprintf("&type=%v", qs.QuestionType)
-	if qs.QuestionType != "multiple" && qs.QuestionType != "boolean" {
-		questionType = ""
-	}
-	return fmt.Sprintf("%s%s%s%s%s", root, amount, category, difficulty, questionType)
-}
-
 // parseQuestionRequest will parse a question request coming from the react server
 // such that it understand exactly which request to relay to the open trivia db
 func parseQuestionRequest(request interface{}) *data.QuestionSet {
@@ -94,3 +76,22 @@ func parseQuestionRequest(request interface{}) *data.QuestionSet {
 	return nil
 }
 
+// buildQuestionRequestURL generates the actual URL needed to query the open trivia db and get
+// a proper response
+func buildQuestionRequestURL(qs *data.QuestionSet) string {
+	root := "https://opentdb.com/api.php?"
+	amount := fmt.Sprintf("amount=%d", qs.NumQuestions)
+	category := fmt.Sprintf("&category=%v", qs.CategoryID)
+	if qs.CategoryID < 0 {
+		category = ""
+	}
+	difficulty := fmt.Sprintf("&difficulty=%v", qs.Difficulty)
+	if qs.Difficulty != "easy" && qs.Difficulty != "medium" && qs.Difficulty != "hard" {
+		difficulty = ""
+	}
+	questionType := fmt.Sprintf("&type=%v", qs.QuestionType)
+	if qs.QuestionType != "multiple" && qs.QuestionType != "boolean" {
+		questionType = ""
+	}
+	return fmt.Sprintf("%s%s%s%s%s", root, amount, category, difficulty, questionType)
+}
