@@ -114,9 +114,9 @@ func GetQuestions(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(jsonStr, &parsedResponse)
 	results := parsedResponse["results"]
 	questions := parseQuestions(results)
-
 	// Send the response back to the calling server
 	SetResponseHeaders(w)
+	fmt.Println(w)
 	json.NewEncoder(w).Encode(questions)
 }
 

@@ -77,16 +77,18 @@ func buildQuestionRequestURL(qs *data.QuestionSet) string {
 // parseQuestionRequest will parse a question request coming from the react server
 // such that it understand exactly which request to relay to the open trivia db
 func parseQuestionRequest(request interface{}) *data.QuestionSet {
+	fmt.Println("REQUEST", request)
 	// Handle the []interface{} returned by response results
 	switch result := request.(type) {
 	case map[string]interface {}:
 		qs := new(data.QuestionSet)
-		qs.Category = interfaceToString(result["category"])
+		qs.CategoryID = interfaceToInt(result["category"])
 		qs.Difficulty = interfaceToString(result["difficulty"])
 		qs.QuestionType = interfaceToString(result["question_type"])
 		qs.NumQuestions = interfaceToInt(result["question_quantity"])
 		qs.RequestURL = buildQuestionRequestURL(qs)
 		fmt.Print("QS = ", qs)
+		fmt.Println("QS Category = ", qs.CategoryID)
 		return qs
 	}
 	return nil
