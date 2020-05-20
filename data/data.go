@@ -46,22 +46,37 @@ func NewQuestionSet(CategoryID int, QuestionType string, NumQuestions int, Diffi
 // Lobby has a number of rounds and an ID
 type Lobby struct {
 	Rounds 			int
+	NumQuestions	int
 	CurrentRound 	int
 	LobbyID 		string
 	Teams 			[]*Team
 	Questions 		[]*QuestionSet
 	Categories		[]*Category
 	Passcode		string
+	Status 			LobbyStatus
 }
 
-func NewLobby(numRounds int) *Lobby {
+type LobbyStatus string
+
+const(
+	InLobby LobbyStatus = "InLobby"
+	InRound LobbyStatus = "InRound"
+	Scoring LobbyStatus = "Scoring"
+	GameOver LobbyStatus = "GameOver"
+)
+
+func AddTeamToLobby(l *Lobby, t *Team) {
+	l.Teams = append(l.Teams, t)
+}
+
+func NewLobby(numRounds int, numQuestions int, passcode string) *Lobby {
 	l := new(Lobby)
 	l.Rounds = numRounds
-	l.LobbyID = GenerateGuid()
-	// Load the Questions w/ default properties
-	for i := 0; i < l.Rounds; i++ {
-		l.Questions[i] = NewQuestionSet(0, "Any", 10, "Any")
+	if len(passcode) > 0 {
+		l.Passcode = passcode
 	}
+	l.NumQuestions = numQuestions
+	l.LobbyID = GenerateGuid()
 	return l
 }
 
@@ -69,12 +84,30 @@ func NewLobby(numRounds int) *Lobby {
 type Team struct {
 	Name 	string
 	TeamID	string
+	Answers [][]string
 }
 
-func NewTeam(Name string) {
+func NewTeam(Name string) *Team {
 	t := new(Team)
 	t.Name = Name
 	t.TeamID = GenerateGuid()
+	return t
+}
+
+type Response struct {
+	TeamID 		string
+	TeamAnswer	string
+	Question 	*Question
+	IsCorrect 	bool
+}
+
+func NewResponse(TeamID string, TeamAnswer string, Question *Question) *Response {
+	r := new(Response)
+	r.TeamID = TeamID
+	r.TeamAnswer = TeamAnswer
+	r.Question = Question
+	r.IsCorrect = TeamAnswer == r.Question.Answer
+	return r
 }
 
 //// Round has a round number and a QuestionSet

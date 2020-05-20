@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/pmccau/TriviaGoServer/game"
 	"github.com/pmccau/TriviaGoServer/router"
 	"log"
 	"net/http"
@@ -17,6 +18,9 @@ func main() {
 	if port == ":" {
 		port = ":8080"
 	}
+
+
+	game.StartGameServer()
 
 	fmt.Println("PORT:", port)
 
