@@ -85,6 +85,7 @@ type Team struct {
 	Name 	string
 	TeamID	string
 	Answers [][]string
+	Score 	int
 }
 
 func NewTeam(Name string) *Team {

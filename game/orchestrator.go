@@ -33,6 +33,15 @@ func KillLobby(LobbyID string) {
 	}
 }
 
+func UpdateScores(LobbyID string) *data.Lobby {
+	if l, ok := lobbies[LobbyID]; ok {
+		for _, t := range l.Teams {
+			t.Score :=
+		}
+	}
+	return nil
+}
+
 func StartRound(LobbyID string, RoundNum int) *data.Lobby {
 	if l, ok := lobbies[LobbyID]; ok {
 		switch l.Status {
@@ -41,6 +50,26 @@ func StartRound(LobbyID string, RoundNum int) *data.Lobby {
 		}
 	}
 	return nil 			// TEMPORARY
+}
+
+func ReturnToLobby(LobbyID string) *data.Lobby {
+
+}
+
+func TransitionLobbyState(l *data.Lobby, state data.LobbyStatus) *data.Lobby {
+	if l.Status != state {
+		switch state {
+		case data.InRound:
+			StartRound(l.LobbyID, l.CurrentRound + 1)
+		case data.InLobby:
+			print("a")
+		case data.Scoring:
+			print("a")
+		case data.GameOver:
+			KillLobby(l.LobbyID)
+		}
+	}
+	return l
 }
 
 func StartGameServer() {
