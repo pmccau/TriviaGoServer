@@ -57,12 +57,19 @@ type Lobby struct {
 }
 
 type LobbyStatus string
+type GameAction string
 
 const(
 	InLobby LobbyStatus = "InLobby"
 	InRound LobbyStatus = "InRound"
 	Scoring LobbyStatus = "Scoring"
 	GameOver LobbyStatus = "GameOver"
+
+	Start GameAction = "Start"
+	Next GameAction = "Next"
+	Pause GameAction = "Pause"
+	End	GameAction = "End"
+	Previous GameAction = "Previous"
 )
 
 func AddTeamToLobby(l *Lobby, t *Team) {
@@ -86,6 +93,7 @@ type Team struct {
 	TeamID	string
 	Answers [][]string
 	Score 	int
+	IsHost	bool
 }
 
 func NewTeam(Name string) *Team {
@@ -110,14 +118,3 @@ func NewResponse(TeamID string, TeamAnswer string, Question *Question) *Response
 	r.IsCorrect = TeamAnswer == r.Question.Answer
 	return r
 }
-
-//// Round has a round number and a QuestionSet
-//type Round struct {
-//	RoundNumber int
-//	Questions 	[]*QuestionSet
-//}
-//
-//func NewRound(RoundNumber int) *Round {
-//	r := new(Round)
-//	r.RoundNumber = RoundNumber
-//}
