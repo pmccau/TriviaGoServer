@@ -1,6 +1,5 @@
 package data
 
-
 type Category struct {
 	Name 	string
 	ID 		int
@@ -46,14 +45,17 @@ func NewQuestionSet(CategoryID int, QuestionType string, NumQuestions int, Diffi
 // Lobby has a number of rounds and an ID
 type Lobby struct {
 	Rounds 			int
-	NumQuestions	int
-	CurrentRound 	int
-	LobbyID 		string
-	Teams 			[]*Team
-	Questions 		[]*QuestionSet
-	Categories		[]*Category
-	Passcode		string
-	Status 			LobbyStatus
+	NumQuestions int
+	CurrentRound int
+	LobbyID      string
+	Teams        []*Team
+	Questions    []*QuestionSet
+	Categories   []*Category
+	Passcode     string
+	Status       LobbyStatus
+	Previous     *Lobby
+	Next         *Lobby
+	Hosts        []*Team
 }
 
 type LobbyStatus string
@@ -64,6 +66,7 @@ const(
 	InRound LobbyStatus = "InRound"
 	Scoring LobbyStatus = "Scoring"
 	GameOver LobbyStatus = "GameOver"
+	Paused LobbyStatus = "Pause"
 
 	Start GameAction = "Start"
 	Next GameAction = "Next"
@@ -72,7 +75,15 @@ const(
 	Previous GameAction = "Previous"
 )
 
+// AddTeamToLobby will add a team to a lobby. If it's the first team, they are
+// the host by default
 func AddTeamToLobby(l *Lobby, t *Team) {
+	if l.Teams == nil {
+		l.Teams = make([]*Team, 0)
+		l.Hosts = make([]*Team, 0)
+		l.Hosts = append(l.Hosts, t)
+		t.IsHost = true
+	}
 	l.Teams = append(l.Teams, t)
 }
 
